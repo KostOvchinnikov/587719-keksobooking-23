@@ -12,7 +12,6 @@ const getRandomInt = function (min, max) {
 getRandomInt(0, 100);
 
 const getRandomNum = function (min, max, simbolsAfterComma) {
-  min = Math.ceil(min);
 
   if ((min < 0) | (max < 0) | (min >= max)) {
     return undefined;
