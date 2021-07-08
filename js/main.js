@@ -22,7 +22,12 @@ const getRandomNum = function (min, max, simbolsAfterComma) {
 
 getRandomNum(0, 100, 2);
 
-const titleData = [
+const LAT_MIN = 35.65;
+const LAT_MAX = 35.7;
+const LNG_MIN = 139.7;
+const LNG_MAX = 139.8;
+
+const titlesData = [
   'Заголовок предложения',
   'Предложения заголовок',
   'Квартира',
@@ -35,7 +40,7 @@ const titleData = [
   'Потрясающие апартаменты',
 ];
 
-const typeData = [
+const typesData = [
   'palace',
   'flat',
   'house',
@@ -58,7 +63,7 @@ const checkInOutData = [
   '14:00',
 ];
 
-const descriptionData = [
+const descriptionsData = [
   'Чистое большое светлое помещение',
   'Грязное маленькое темное помещение',
   'Уютная квартира в центре Санкт-Петербурга',
@@ -77,43 +82,54 @@ const getRandomItem = function (array) {
 
 const generateAuthor = function () {
   const author = {
-    avatar: 'img/avatars/user' + getRandomInt(1, 10) + '.png',
+    avatar: `img/avatars/user0${getRandomInt(1, 9)}.png`,
   };
   return author;
 };
 
 const generateLocation = function () {
   const location = {
-    lat: getRandomNum(35.65, 35.7, 5),
-    lng: getRandomNum(139.7, 139.8, 5),
+    lat: getRandomNum(LAT_MIN, LAT_MAX, 5),
+    lng: getRandomNum(LNG_MIN, LNG_MAX, 5),
   };
   return location;
 };
 
-const generateOffer = function () {
+const getRandomArr = (accumulator, currentValue) => {
+  const a = Math.random() > 0.5;
+  if (a) {
+    accumulator.push(currentValue);
+  }
+  return accumulator;
+};
+
+const generateOffer = function (location) {
   const offer = {
-    title: getRandomItem(titleData),
-    // address: location.lat.join(location.lng),
-    price: Math.floor(Math.random() * 10000),
-    type: getRandomItem(typeData),
+    title: getRandomItem(titlesData),
+    address: `${location.lat}, ${location.lng}`,
+    price: getRandomInt(100, 10000),
+    type: getRandomItem(typesData),
     rooms: getRandomInt(1, 10),
     guests: getRandomInt(1, 10),
     checkin: getRandomItem(checkInOutData),
     checkout: getRandomItem(checkInOutData),
-    features: getRandomItem(featuresData),
-    description: getRandomItem(descriptionData),
-    photos: getRandomItem(photosData),
+    features: featuresData.reduce(getRandomArr, []),
+    description: getRandomItem(descriptionsData),
+    photos: photosData.reduce(getRandomArr, []),
   };
   return offer;
 };
 
+generateOffer(generateLocation());
+
 const generateData = function (number) {
+  const location = generateLocation();
   const data = [];
   for (let i = 0; i <= number - 1; i++) {
     data.push({
       author: generateAuthor(),
-      offer: generateOffer(),
-      location: generateLocation(),
+      offer: generateOffer(location),
+      location,
     });
   }
 
@@ -121,4 +137,3 @@ const generateData = function (number) {
 };
 
 generateData(10);
-// console.log(generateData(10));
