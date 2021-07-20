@@ -100,9 +100,10 @@ const generateOffer = function (location) {
 
 generateOffer(generateLocation());
 
+const data = [];
+
 const generateData = function (number) {
   const location = generateLocation();
-  const data = [];
   for (let i = 0; i <= number - 1; i++) {
     data.push({
       author: generateAuthor(),
@@ -114,4 +115,4 @@ const generateData = function (number) {
   return data;
 };
 
-export {generateData};
+export {data, featuresData, typesData, generateData};
