@@ -7,20 +7,6 @@ const titleInput = adForm.querySelector('#title');
 const priceInput = adForm.querySelector('#price');
 const roomSelect = adForm.querySelector('#room_number');
 const capacitySelect = adForm.querySelector('#capacity');
-// const capacity1 = capacitySelect.querySelector('option[value="1"]');
-// const capacity2 = capacitySelect.querySelector('option[value="2"]');
-// const capacity3 = capacitySelect.querySelector('option[value="3"]');
-// const capacity0 = capacitySelect.querySelector('option[value="0"]');
-
-// Временное решение
-/*
-window.addEventListener('load', () => {
-  capacity1.disabled = false;
-  capacity2.disabled = true;
-  capacity3.disabled = true;
-  capacity0.disabled = true;
-});
-*/
 
 titleInput.addEventListener('input', () => {
   const valueLenght = titleInput.value.length;
@@ -57,14 +43,7 @@ const roomsCountToGuests = {
 
 capacitySelect.addEventListener('change', (evt) => {
   const capacitySelected = evt.target.value;
-
-  if (roomSelect.value === '1' && !roomsCountToGuests[1].includes(capacitySelected)) {
-    capacitySelect.setCustomValidity('Превышено количество гостей!');
-  } else if (roomSelect.value === '2' && !roomsCountToGuests[2].includes(capacitySelected)) {
-    capacitySelect.setCustomValidity('Превышено количество гостей!');
-  } else if (roomSelect.value === '3' && !roomsCountToGuests[3].includes(capacitySelected)) {
-    capacitySelect.setCustomValidity('Превышено количество гостей!');
-  } else if (roomSelect.value === '100' && !roomsCountToGuests[100].includes(capacitySelected)) {
+  if (!roomsCountToGuests[roomSelect.value].includes(capacitySelected)) {
     capacitySelect.setCustomValidity('Превышено количество гостей!');
   } else {
     capacitySelect.setCustomValidity('');
